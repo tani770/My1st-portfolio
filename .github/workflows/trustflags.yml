@@ -1,0 +1,22 @@
+name: TrustFlags Verification
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+  statuses: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: trustflags/trustflags@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          fail_on_errors: true
